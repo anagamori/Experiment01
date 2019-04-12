@@ -9,7 +9,7 @@ close all
 clear all
 clc
 
-dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 01';
+dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 05/Wrist extension';
 codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01';
 
 Fs = 1000; % sampling frequency
@@ -19,7 +19,7 @@ CalibrationMatrix = [12.6690 0.2290 0.1050 0 0 0; 0.1600 13.2370 -0.3870  0 0 0;
 
 %--------------------------------------------------------------------------
 % Go through all MVC trials
-for j = 1:2
+for j = 1:2:3
    fileName_MVC = ['mvc_' num2str(j) '.mat'];
    cd (dataFolder)
    load (fileName_MVC)

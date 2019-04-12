@@ -1,9 +1,14 @@
-function [HR_vec] =  EKG2HR (data,Fs,threshold)
+function [HR_vec] =  EKG2HR (data,Fs,threshold,figOpt)
 
 HR_vec = zeros(1,length(data));
 
-[pks,loc] = findpeaks(data,'MinPeakDistance',0.5*Fs,'MinPeakHeight',threshold);
+[~,loc] = findpeaks(data,'MinPeakDistance',0.5*Fs,'MinPeakHeight',threshold);
 
+if figOpt == 1
+    figure(21)
+    findpeaks(data,'MinPeakDistance',0.5*Fs,'MinPeakHeight',threshold)
+    
+end
 for i = 2:length(loc)
     ISI = (loc(i) - loc(i-1))/Fs;
     HR = 60/ISI;
