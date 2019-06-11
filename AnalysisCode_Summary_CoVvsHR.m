@@ -5,7 +5,7 @@ clc
 
 codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/';
 
-subjectN = 4;
+subjectN = 6;
 
 Fs = 1000;
 CoV_mat = [];
@@ -14,7 +14,7 @@ HR_mat = [];
 HR_diff_mat = [];
 GSR_mat = [];
 
-for i = 4%:subjectN
+for i = 1:subjectN
     index = 1;
     CoV = [];
     PT = [];

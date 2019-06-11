@@ -9,11 +9,15 @@ close all
 clear all
 clc
 
-
-for n = 1:4
+muscle = 'extension';
+for n = 1:11
     n
     %--------------------------------------------------------------------------
-    dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(n) '/Wrist flexion'];
+    if n < 10
+        dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(n) '/Wrist ' muscle];
+    else
+        dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID ' num2str(n) '/Wrist ' muscle];
+    end
     codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01';
     
     %--------------------------------------------------------------------------
@@ -47,6 +51,7 @@ for n = 1:4
         CoV_1(i) = SD_Force_1/mean_Force_1*100;
         [pxx_1_temp,freq] = pwelch(Force_1-mean(Force_1),gausswin(5*Fs),0.9*5*Fs,0:0.2:30,Fs,'power');
         PT_1(i) = mean(mean(pxx_1_temp(:,31:61),2));
+        p_12_20_1(i) = mean(mean(pxx_1_temp(:,61:101),2));
         time = [1:length(Force_Norm_1)]./Fs;
  
         
@@ -61,6 +66,7 @@ for n = 1:4
         CoV_2(i) = SD_Force_2/mean_Force_2*100;
         [pxx_2_temp,~] = pwelch(Force_2-mean(Force_2),gausswin(5*Fs),0.9*5*Fs,0:0.2:30,Fs,'power');
         PT_2(i) = mean(mean(pxx_2_temp(:,31:61),2));
+        p_12_20_2(i) = mean(mean(pxx_2_temp(:,61:101),2));
         
         cd (codeFolder)
         pxx_1(i,:) = pxx_1_temp;
@@ -74,10 +80,12 @@ for n = 1:4
     
     CoV_All = [CoV_1',CoV_2']; %,CoV_3'];
     PT_All = [PT_1',PT_2']; %,PT_3'];
+   p_12_20_All = [p_12_20_1',p_12_20_2'];
     
     cd (dataFolder)
     save('CoV_All','CoV_All')
     save('PT_All','PT_All')
+    save('p_12_20_All','p_12_20_All')
     save('pxx_1','pxx_1')
     save('pxx_2','pxx_2')
     save('pxx_norm_1','pxx_norm_1')

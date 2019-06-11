@@ -9,12 +9,12 @@ close all
 clear all
 clc
 
-
-for n = 1:4
-    n
+subject_vec = [1 2 3 4 5 6 7 9];
+for k = 1:length(subject_vec)
+    n = subject_vec(k);
     %--------------------------------------------------------------------------
     subjectFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(n)];
-    dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(n) '/Wrist extension'];
+    dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(n) '/Wrist flexion'];
     codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01';
     %--------------------------------------------------------------------------
     Fs = 100;
@@ -50,24 +50,62 @@ for n = 1:4
         cd (dataFolder)
         load(fileName1);
         cd (codeFolder)
-        Data_HR_1 = data.values_GSR(3*Fs+1:23*Fs,2);
-        Data_HR_filt_1 = filtfilt(b,a,Data_HR_1);
-        [HR_1_vec] =  EKG2HR (Data_HR_filt_1,Fs,threshold,0);
-        HR_1_all(i,:) = HR_1_vec-rest_HR;
+        if length(data.values_GSR(:,2)) < 23*Fs && length(data.values_GSR(:,2)) > 19*Fs
+            Data_HR_1_temp = data.values_GSR(3*Fs+1:end,2);
+            Data_HR_1 = [Data_HR_1_temp;Data_HR_1_temp(end)*ones(23*Fs-length(data.values_GSR(:,2)),1)];
+            Data_HR_filt_1 = filtfilt(b,a,Data_HR_1);
+            [HR_1_vec] =  EKG2HR (Data_HR_filt_1,Fs,threshold,0);
+            HR_1_all(i,:) = HR_1_vec-rest_HR;
+            
+            Data_GSR_1_temp = data.values_GSR(3*Fs+1:end,3);
+            Data_GSR_1 = [Data_GSR_1_temp;Data_GSR_1_temp(end)*ones(23*Fs-length(data.values_GSR(:,3)),1)];
+            
+        elseif length(data.values_GSR(:,2)) < 19*Fs
+            Data_HR_1 = NaN(1,length(3*Fs+1:23*Fs));
+            HR_1_vec = NaN(1,length(3*Fs+1:23*Fs));
+            HR_1_all(i,:) = HR_1_vec-rest_HR;
+            
+            Data_GSR_1 = NaN(1,length(3*Fs+1:23*Fs));
+        else
+            Data_HR_1 = data.values_GSR(3*Fs+1:23*Fs,2);
+            Data_HR_filt_1 = filtfilt(b,a,Data_HR_1);
+            [HR_1_vec] =  EKG2HR (Data_HR_filt_1,Fs,threshold,0);
+            HR_1_all(i,:) = HR_1_vec-rest_HR;
+            
+            Data_GSR_1 = data.values_GSR(3*Fs+1:23*Fs,3);
+        end
         
-        Data_GSR_1 = data.values_GSR(3*Fs+1:23*Fs,3);
+        
         Data_GSR_filt_1 = filtfilt(b_low,a_low,Data_GSR_1);
         GSR_1_all(i,:) = Data_GSR_filt_1-Data_GSR_filt_1(1);
         
         cd (dataFolder)
         load(fileName2);
         cd (codeFolder)
-        Data_HR_2 = data.values_GSR(3*Fs+1:23*Fs,2);
-        Data_HR_filt_2 = filtfilt(b,a,Data_HR_2);
-        [HR_2_vec] =  EKG2HR (Data_HR_filt_2,Fs,threshold,0);
-        HR_2_all(i,:) = HR_2_vec-rest_HR;
+        if length(data.values_GSR(:,2)) < 23*Fs && length(data.values_GSR(:,2)) > 19*Fs
+            Data_HR_2_temp = data.values_GSR(3*Fs+1:end,2);
+            Data_HR_2 = [Data_HR_2_temp;Data_HR_2_temp(end)*ones(23*Fs-length(data.values_GSR(:,2)),1)];
+            Data_HR_filt_2 = filtfilt(b,a,Data_HR_2);
+            [HR_2_vec] =  EKG2HR (Data_HR_filt_2,Fs,threshold,0);
+            HR_2_all(i,:) = HR_2_vec-rest_HR;
+            
+            Data_GSR_2_temp = data.values_GSR(3*Fs+1:end,3);
+            Data_GSR_2 = [Data_GSR_2_temp;Data_GSR_2_temp(end)*ones(23*Fs-length(data.values_GSR(:,3)),1)];
+        elseif length(data.values_GSR(:,2)) < 19*Fs
+            Data_HR_2= NaN(1,length(3*Fs+1:23*Fs));
+            [HR_2_vec] =  NaN(1,length(3*Fs+1:23*Fs));
+            HR_2_all(i,:) = HR_2_vec-rest_HR;
+            
+            Data_GSR_2 = NaN(1,length(3*Fs+1:23*Fs));
+        else
+            Data_HR_2 = data.values_GSR(3*Fs+1:23*Fs,2);
+            Data_HR_filt_2 = filtfilt(b,a,Data_HR_2);
+            [HR_2_vec] =  EKG2HR (Data_HR_filt_2,Fs,threshold,0);
+            HR_2_all(i,:) = HR_2_vec-rest_HR;
+            
+            Data_GSR_2 = data.values_GSR(3*Fs+1:23*Fs,3);
+        end
         
-        Data_GSR_2 = data.values_GSR(3*Fs+1:23*Fs,3);
         Data_GSR_filt_2 = filtfilt(b_low,a_low,Data_GSR_2);
         GSR_2_all(i,:) = Data_GSR_filt_2-Data_GSR_filt_2(1);
         

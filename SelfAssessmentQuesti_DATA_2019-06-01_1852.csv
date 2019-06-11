@@ -1,0 +1,12 @@
+record_id,name,age,sex,injury_history,injury_type,injuries_time,disease_history,disease_kind,disease_time,history_sports,kind_sports,participant_information_complete,writing,drawing,throwing,scissors,toothbrush,knife,spoon,broom,match,box,total_left,total_right,cumulative,difference,result,edinburgh_handedness_inventory_complete,df_attention,attention_dir_dc,df_stress,df_difficulty,hg_attention,attention_dir_hg,hg_stress,hg_difficulty,lg_attention,attention_dir_lg,lg_stress,lg_difficulty,lg_arousal,tiredness,selfassessment_complete
+1,"Akira Nagamori",30,1,1,"Shoulder injury (labrum tear)","12 years ago",0,,,1,"Powerlifting (current)  Baseball (past)",2,5,5,5,5,5,5,5,5,5,5,0,20,20,20,100,2,57,2,9,15,86,1,38,62,5,1,3,5,55,12,2
+2,Victor,29,1,0,,,0,,,1,"Tae Kwon Do  Swimming  Soccer",2,5,5,4,5,5,4,5,1,4,4,2,14,16,12,75,2,46,1,42,42,66,1,2,25,21,2,16,8,50,11,2
+3,"Christopher Laine",36,1,0,,,0,,,1,"Track  Soccer  Tennis  Various martial arts  mountain biking",2,5,5,5,5,5,5,5,3,4,3,2,17,19,15,78.9,2,44,1,43,38,79,1,62,64,32,2,26,19,50,60,2
+4,Octavio,26,1,0,,,0,,,0,,2,5,5,5,5,5,5,5,3,5,3,2,18,20,16,80,2,44,1,32,37,74,1,18,76,32,1,26,34,93,8,2
+5,Brian,27,1,0,,,0,,,1,"Sprinting, Soccer, Long Distance Running",2,5,5,5,5,5,5,4,5,5,4,0,18,18,18,100,2,52,1,46,42,98,1,0,20,22,2,0,0,16,69,2
+6,"Sungwoo Park",34,1,0,,,0,,,1,"Tennis  Hiking  ",2,5,5,5,5,4,5,3,4,5,3,2,16,18,14,77.8,2,39,1,42,40,85,1,11,50,22,1,0,13,78,30,2
+7,yannick,27,1,1,"broken arm  tendon deinsertion (shoulder)","15 years ago",0,,,1,judo,2,5,5,5,5,4,4,3,3,5,2,3,14,17,11,64.7,2,50,1,50,50,50,1,0,51,31,1,0,7,50,0,2
+8,Dario,27,1,1,"Lower arm fractured","when I was 5 years old",0,,,1,"swimming, triathlon",2,5,5,4,3,5,4,4,2,4,3,3,12,15,9,60,2,50,1,50,50,89,1,0,67,63,1,0,58,50,62,2
+9,Alex,27,1,0,,,0,,,1,"Soccer, Football, Basketball, Baseball, Racketball",2,5,4,1,4,4,4,4,3,4,4,3,10,13,7,53.8,2,50,2,50,50,96,1,57,74,25,2,34,34,50,50,2
+10,Suraj,27,1,0,,,0,,,1,"Basket Ball, Karate",2,5,5,4,4,5,4,5,3,3,3,3,14,17,11,64.7,2,36,1,50,50,73,1,60,72,24,2,13,25,61,13,2
+11,Ashiwn,22,1,0,,,0,,,0,,2,5,5,5,5,5,5,5,5,5,3,1,19,20,18,90,2,50,1,50,50,100,1,7,74,8,2,0,0,70,7,2

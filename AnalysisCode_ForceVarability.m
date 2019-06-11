@@ -10,7 +10,7 @@ clear all
 clc
 
 %--------------------------------------------------------------------------
-dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 04/Wrist extension/';
+dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 01 20_MVC/Wrist extension/';
 codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01';
 
 %--------------------------------------------------------------------------
@@ -26,8 +26,9 @@ cd (codeFolder)
 [b,a] = butter(4,30/(Fs/2),'low');
 kernel = gausswin(2*Fs)./sum(gausswin(1*Fs));
 %
-for i = 1:10
-    
+trial_vec = 1:10; %[1:6 8:10];
+for n = 1:length(trial_vec)
+    i  = trial_vec(n);
     fileName1 = ['hg_' num2str(i) '.mat'];
     fileName2 = ['lg_' num2str(i) '.mat'];
     %fileName3 = ['lg_' num2str(i) '.mat'];
