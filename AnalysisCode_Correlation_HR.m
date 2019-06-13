@@ -34,7 +34,7 @@ CoV_diff_stack = [];
 HR_diff_stack = [];
 PT_diff_stack = [];
 
-for k = 1:length(subject_vec) 
+for k = 1:length(subject_vec)
     i = subject_vec(k);
     index = 1;
     for j = 1:2
@@ -60,15 +60,15 @@ for k = 1:length(subject_vec)
         load('GSR_All')
         cd(codeFolder)
         
-        CoV_stack = [CoV_stack;CoV_All(:,1)]; 
-        PT_stack = [PT_stack;PT_All(:,1)]; 
+        CoV_stack = [CoV_stack;CoV_All(:,1)];
+        PT_stack = [PT_stack;PT_All(:,1)];
         p_12_20_stack = [p_12_20_stack;p_12_20_All(:,1)];
-        HR_stack = [HR_stack;HR_All(:,1)]; 
+        HR_stack = [HR_stack;HR_All(:,1)];
         
-        CoV_2_stack = [CoV_2_stack;CoV_All(:,2)]; 
-        PT_2_stack = [PT_2_stack;PT_All(:,2)]; 
+        CoV_2_stack = [CoV_2_stack;CoV_All(:,2)];
+        PT_2_stack = [PT_2_stack;PT_All(:,2)];
         p_12_20_2_stack = [p_12_20_2_stack;p_12_20_All(:,2)];
-        HR_2_stack = [HR_2_stack;HR_All(:,2)]; 
+        HR_2_stack = [HR_2_stack;HR_All(:,2)];
         
         mean_CoV = mean(CoV_All);
         CoV_mean_stack = [CoV_mean_stack; mean_CoV'];
@@ -77,10 +77,20 @@ for k = 1:length(subject_vec)
         mean_HR = nanmean(HR_All);
         HR_mean_stack = [HR_mean_stack; mean_HR'];
         HR_diff_stack = [HR_diff_stack; mean_HR(1)-mean_HR(2)];
-             
+        
         mean_PT = mean(PT_All);
         PT_mean_stack = [PT_mean_stack; mean_PT'];
         PT_diff_stack = [PT_diff_stack; mean_PT(1)-mean_PT(2)];
+        figure(4)
+        scatter(mean_HR(1),mean_CoV(1),[],[37  65 178]/255,'filled')
+        hold on
+        scatter(mean_HR(2),mean_CoV(2),[],[230 57 70]/255,'filled')
+        
+        figure(6)
+        scatter(mean_HR(1),mean_PT(1),[],[37  65 178]/255,'filled')
+        hold on
+        scatter(mean_HR(2),mean_PT(2),[],[230 57 70]/255,'filled')
+        
     end
 end
 
@@ -92,7 +102,6 @@ b1 = X\[CoV_stack;CoV_2_stack];
 CoV_Calc = X*b1;
 Rsq = 1 - sum(([CoV_stack;CoV_2_stack] - CoV_Calc).^2)/sum(([CoV_stack;CoV_2_stack] - mean([CoV_stack;CoV_2_stack])).^2)
 
-close all
 figure(1)
 scatter(HR_stack,CoV_stack,[],[123 50 148]/255,'filled')
 hold on
@@ -122,5 +131,51 @@ plot([HR_stack;HR_2_stack],PT_Calc,'k','LineWidth',1)
 legend('High Gain','Low Gain')
 xlabel('Normalized Heart Rate (bpm)','FontSize',14)
 ylabel('Physiological Tremor (%MVC^2)','FontSize',14)
+set(gca,'TickDir','out');
+set(gca,'box','off')
+
+%%
+figure(3)
+scatter(HR_diff_stack,CoV_diff_stack,[],[37  65 178]/255,'filled')
+xlabel('Difference in Normalized Heart Rate (bpm)','FontSize',14)
+ylabel('Difference in CoV for Force (%)','FontSize',14)
+set(gca,'TickDir','out');
+set(gca,'box','off')
+
+%%
+[R,P] = corrcoef(HR_mean_stack,CoV_mean_stack)
+X_2 = [ones(length(HR_mean_stack),1) HR_mean_stack];
+b_2 = X_2\CoV_mean_stack;
+CoV_mean_Calc = X_2*b_2;
+Rsq_2 = 1 - sum((CoV_mean_stack - CoV_mean_Calc).^2)/sum((CoV_mean_stack - mean(CoV_mean_stack)).^2)
+
+figure(4)
+plot(HR_mean_stack,CoV_mean_Calc,'k','LineWidth',1)
+xlabel('Normalized Heart Rate (bpm)','FontSize',14)
+ylabel('CoV for Force (%)','FontSize',14)
+legend('High Gain','Low Gain')
+set(gca,'TickDir','out');
+set(gca,'box','off')
+
+%%
+figure(5)
+scatter(HR_diff_stack,PT_diff_stack,[],[37  65 178]/255,'filled')
+xlabel('Difference in Normalized Heart Rate (bpm)','FontSize',14)
+ylabel('Difference in CoV for Physiological Tremor (%MVC^2)','FontSize',14)
+set(gca,'TickDir','out');
+set(gca,'box','off')
+
+%%
+[R,P] = corrcoef(HR_mean_stack,PT_mean_stack)
+X_2 = [ones(length(HR_mean_stack),1) HR_mean_stack];
+b_2 = X_2\PT_mean_stack;
+PT_mean_Calc = X_2*b_2;
+Rsq_2 = 1 - sum((PT_mean_stack - PT_mean_Calc).^2)/sum((PT_mean_stack - mean(PT_mean_stack)).^2)
+
+figure(6)
+plot(HR_mean_stack,PT_mean_Calc,'k','LineWidth',1)
+xlabel('Normalized Heart Rate (bpm)','FontSize',14)
+ylabel('Physiological Tremor (%MVC^2)','FontSize',14)
+legend('High Gain','Low Gain')
 set(gca,'TickDir','out');
 set(gca,'box','off')

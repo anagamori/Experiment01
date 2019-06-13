@@ -50,6 +50,7 @@ for n = 1:11
         SD_Force_1 = std(Force_1);
         CoV_1(i) = SD_Force_1/mean_Force_1*100;
         [pxx_1_temp,freq] = pwelch(Force_1-mean(Force_1),gausswin(5*Fs),0.9*5*Fs,0:0.2:30,Fs,'power');
+        %pxx_1_temp = pxx_1_temp./sum(pxx_1_temp);
         PT_1(i) = mean(mean(pxx_1_temp(:,31:61),2));
         p_12_20_1(i) = mean(mean(pxx_1_temp(:,61:101),2));
         time = [1:length(Force_Norm_1)]./Fs;
@@ -65,6 +66,7 @@ for n = 1:11
         SD_Force_2 = std(Force_2);
         CoV_2(i) = SD_Force_2/mean_Force_2*100;
         [pxx_2_temp,~] = pwelch(Force_2-mean(Force_2),gausswin(5*Fs),0.9*5*Fs,0:0.2:30,Fs,'power');
+        %pxx_2_temp = pxx_2_temp./sum(pxx_2_temp);
         PT_2(i) = mean(mean(pxx_2_temp(:,31:61),2));
         p_12_20_2(i) = mean(mean(pxx_2_temp(:,61:101),2));
         
