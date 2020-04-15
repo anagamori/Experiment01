@@ -9,7 +9,7 @@ close all
 clear all
 clc
 
-dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 01 20_MVC/wrist extension';
+dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 01/wrist extension';
 codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01';
 
 Fs = 1000; % sampling frequency

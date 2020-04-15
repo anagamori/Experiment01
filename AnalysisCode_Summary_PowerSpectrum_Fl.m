@@ -3,7 +3,7 @@ close all
 clear all
 clc
 
-codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/';
+codeFolder = '/Users/akira/Documents/GitHub/Experiment01/';
 
 subjectN = 11;
 
@@ -19,9 +19,9 @@ for i = 1:subjectN
     index = 1;
     
     if i < 10
-        dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(i) '/Wrist flexion'];
+        dataFolder = ['/Users/akira/Documents/GitHub/Experiment01/Record ID 0' num2str(i) '/Wrist flexion'];
     else
-        dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID ' num2str(i) '/Wrist flexion'];
+        dataFolder = ['/Users/akira/Documents/GitHub/Experiment01/Record ID ' num2str(i) '/Wrist flexion'];
     end
     cd(dataFolder)
     load('pxx_1')
@@ -37,7 +37,7 @@ for i = 1:subjectN
     
 end
 
-cd('/Users/akiranagamori/Documents/GitHub/MU-Population-Model/SLR Test/Stats')
+cd('/Users/akira/Documents/GitHub/MU-Population-Model/SLR Test/Stats')
 save('pxx_fl_1_all','pxx_fl_1_all')
 save('pxx_fl_2_all','pxx_fl_2_all')
 cd(codeFolder)
