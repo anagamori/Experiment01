@@ -38,12 +38,14 @@ for i = 1:subjectN
             else
                 dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID ' num2str(i) '/Wrist flexion'];
             end
+            color_muscle = [37  65 178]/255;
         elseif j == 2
             if i < 10
                 dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(i) '/Wrist extension'];
             else
                 dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID ' num2str(i) '/Wrist extension'];
             end
+            color_muscle = [230 57 70]/255;
         end
         cd(dataFolder)
         load('CoV_All')
@@ -70,6 +72,10 @@ for i = 1:subjectN
         mean_PT = mean(PT_All);
         PT_mean_stack = [PT_mean_stack; mean_PT'];
         PT_diff_stack = [PT_diff_stack; mean_PT(1)-mean_PT(2)];
+        
+        figure(5)
+        scatter(mean_PT(1)-mean_PT(2),mean_CoV(1)-mean_CoV(2),[],color_muscle,'filled')
+         hold on 
     end
 end
 
@@ -82,7 +88,7 @@ b1 = X\[CoV_stack;CoV_2_stack];
 CoV_Calc = X*b1;
 Rsq = 1 - sum(([CoV_stack;CoV_2_stack] - CoV_Calc).^2)/sum(([CoV_stack;CoV_2_stack] - mean([CoV_stack;CoV_2_stack])).^2)
 
-close all
+
 figure(1)
 scatter(PT_stack,CoV_stack,[],[123 50 148]/255,'filled')
 hold on
@@ -120,8 +126,17 @@ set(gca,'TickDir','out');
 set(gca,'box','off')
 
 %%
-scatter(PT_diff_stack,CoV_diff_stack,'filled')
+[R,P] = corrcoef(PT_diff_stack,CoV_diff_stack)
+X_2 = [ones(length(PT_diff_stack),1) PT_diff_stack];
+b_2 = X_2\CoV_diff_stack;
+CoV_diff_Calc = X_2*b_2;
+Rsq_2 = 1 - sum((CoV_diff_stack - CoV_diff_Calc).^2)/sum((CoV_diff_stack - mean(CoV_diff_stack)).^2)
+
+figure(5)
+plot(PT_diff_stack,CoV_diff_Calc,'k','LineWidth',1)
+%scatter(PT_diff_stack,CoV_diff_stack,'filled')
 xlabel('Difference in Physiological Tremor (%MVC^2)','FontSize',14)
 ylabel('Difference CoV for Force (%)','FontSize',14)
 set(gca,'TickDir','out');
 set(gca,'box','off')
+%set(gca,'xscale','log')

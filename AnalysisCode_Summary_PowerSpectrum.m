@@ -9,7 +9,7 @@ subjectN = 11;
 
 Fs = 1000;
 
-freq = 0:0.2:30;
+freq = 0:0.1:30;
 pxx_fl_1_all = zeros(subjectN,length(freq));
 pxx_fl_2_all = zeros(subjectN,length(freq));
 pxx_ex_1_all = zeros(subjectN,length(freq));
@@ -59,15 +59,16 @@ for i = 1:subjectN
     end
 end
 
+%%
 for f = 1:length(freq)
-    [~,p_1_2(f)] = ttest(pxx_norm_fl_1_all(:,f),pxx_norm_ex_1_all(:,f));
-    if p_1_2(f) > 0.2
-        p_1_2(f) = 0.2;
+    [~,p_1_2(f)] = ttest(pxx_fl_1_all(:,f),pxx_fl_2_all(:,f));
+    if p_1_2(f) > 0.1
+        p_1_2(f) = 0.1;
     end
     
-     [~,p_1_2_norm(f)] = ttest(pxx_norm_fl_2_all(:,f),pxx_norm_ex_2_all(:,f));
-    if p_1_2_norm(f) > 0.2
-        p_1_2_norm(f) = 0.2;
+     [~,p_1_2_ex(f)] = ttest(pxx_ex_1_all(:,f),pxx_ex_2_all(:,f));
+    if p_1_2_ex(f) > 0.1
+        p_1_2_ex(f) = 0.1;
     end
     
 %     [~,p_1_3(f)] = ttest2(pxx_1(:,f),pxx_3(:,f));
@@ -109,26 +110,26 @@ legend('Fl HG','Fl LG','Ex HG','Ex LG')
 
 %%
 figure(3)
-plot(freq,mean(pxx_norm_fl_1_all),'LineWidth',1)
+plot(freq,mean(pxx_norm_fl_1_all)*100,'LineWidth',1)
 hold on 
-plot(freq,mean(pxx_norm_fl_2_all),'LineWidth',1)
-plot(freq,mean(pxx_norm_ex_1_all),'LineWidth',1)
-plot(freq,mean(pxx_norm_ex_2_all),'LineWidth',1)
+plot(freq,mean(pxx_norm_fl_2_all)*100,'LineWidth',1)
+plot(freq,mean(pxx_norm_ex_1_all)*100,'LineWidth',1)
+plot(freq,mean(pxx_norm_ex_2_all)*100,'LineWidth',1)
 xlabel('Frequency (Hz)','FontSize',14)
-ylabel('Power (%MVC)','FontSize',14)
+ylabel('Proportional Power (%)','FontSize',14)
 set(gca,'TickDir','out');
 set(gca,'box','off')
 legend('Fl HG','Fl LG','Ex HG','Ex LG')
 
 figure(4)
-plot(freq,mean(pxx_norm_fl_1_all),'LineWidth',1)
+plot(freq,mean(pxx_norm_fl_1_all)*100,'LineWidth',1)
 hold on 
-plot(freq,mean(pxx_norm_fl_2_all),'LineWidth',1)
-plot(freq,mean(pxx_norm_ex_1_all),'LineWidth',1)
-plot(freq,mean(pxx_norm_ex_2_all),'LineWidth',1)
-ylim([0 0.01])
+plot(freq,mean(pxx_norm_fl_2_all)*100,'LineWidth',1)
+plot(freq,mean(pxx_norm_ex_1_all)*100,'LineWidth',1)
+plot(freq,mean(pxx_norm_ex_2_all)*100,'LineWidth',1)
+ylim([0 2])
 xlabel('Frequency (Hz)','FontSize',14)
-ylabel('Power (%MVC)','FontSize',14)
+ylabel('Proportional Power (%)','FontSize',14)
 set(gca,'TickDir','out');
 set(gca,'box','off')
 legend('Fl HG','Fl LG','Ex HG','Ex LG')
@@ -136,16 +137,16 @@ legend('Fl HG','Fl LG','Ex HG','Ex LG')
 %%
 figure(5)
 subplot(2,1,1)
-plot(freq,mean(pxx_norm_fl_1_all),'LineWidth',1)
+plot(freq,mean(pxx_fl_1_all),'LineWidth',1)
 hold on 
-plot(freq,mean(pxx_norm_ex_1_all),'LineWidth',1)
+plot(freq,mean(pxx_fl_2_all),'LineWidth',1)
 subplot(2,1,2)
 plot(freq,p_1_2,'LineWidth',1)
 
 figure(6)
 subplot(2,1,1)
-plot(freq,mean(pxx_norm_fl_2_all),'LineWidth',1)
+plot(freq,mean(pxx_ex_1_all),'LineWidth',1)
 hold on 
-plot(freq,mean(pxx_norm_ex_2_all),'LineWidth',1)
+plot(freq,mean(pxx_ex_2_all),'LineWidth',1)
 subplot(2,1,2)
-plot(freq,p_1_2_norm,'LineWidth',1)
+plot(freq,p_1_2_ex,'LineWidth',1)

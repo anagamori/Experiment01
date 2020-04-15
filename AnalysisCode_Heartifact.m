@@ -27,10 +27,10 @@ threshold = 15;
 
 kernel = gausswin(2*Fs)./sum(gausswin(1*Fs));
 
-muscle = 'extension';
-subject_vec = [1 2 3 4 5 6 9];
+muscle = 'flexion';
+subject_vec = 1; %[1 2 3 4 5 6 9];
 
-for j = 1:length(subject_vec)
+for j = 1 %:length(subject_vec)
     %--------------------------------------------------------------------------
     n = subject_vec(j);
     if n < 10

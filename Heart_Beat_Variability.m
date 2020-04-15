@@ -12,6 +12,9 @@ p2p_sta_stack_2 = [];
 CoV_stack_2 = [];
 
 mean_p2p_sta_stack= [];
+mean_CoV_stack= [];
+
+
 for j = 1:2
     for i = 1:length(subject_vec)
         n = subject_vec(i);
@@ -42,6 +45,7 @@ for j = 1:2
         CoV_stack = [CoV_stack;CoV_All(:,1)];
         
         mean_p2p_sta_stack = [mean_p2p_sta_stack mean(p2p_sta_all(:,1))];
+        mean_CoV_stack = [mean_CoV_stack mean(CoV_All(:,1))];
         
         figure(2)
         scatter(p2p_sta_all(:,2),CoV_All(:,2),'filled')

@@ -117,7 +117,7 @@ b_3 = X\PT_diff_vec;
 PT_Calc = X*b_3;
 Rsq = 1 - sum((PT_diff_vec - PT_Calc).^2)/sum((PT_diff_vec - mean(PT_diff_vec)).^2)
 
-close all
+%close all
 [R,P] = corrcoef(PT_diff_vec,Attention_vec)
 figure(3)
 % scatter(PT(:,1)-PT(:,2),Data_attention(subject_vec),[],[37  65 178]/255,'filled')
@@ -127,7 +127,7 @@ scatter(Data_attention(subject_vec),PT_diff_vec,[],[37  65 178]/255,'filled')
 hold on
 plot(Attention_vec,PT_Calc,'k','LineWidth',2) 
 xlabel('Difference in sujective rating of attention','FontSize',14)
-ylabel('Difference in PT for force','FontSize',14)
+ylabel('Difference in Physiological Tremor (%MVC^2)','FontSize',14)
 set(gca,'TickDir','out');
 set(gca,'box','off')
 

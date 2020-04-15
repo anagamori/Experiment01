@@ -63,13 +63,13 @@ plot(1:2, CoV(:,1:2)','color',[0.5 0.5 0.5])
 scatter(3*ones(1,subjectN), CoV(:,3),[],[230 57 70]/255,'filled')
 scatter(4*ones(1,subjectN), CoV(:,4),[],[230 57 70]/255,'filled')
 plot(3:4, CoV(:,3:4)','color',[0.5 0.5 0.5])
-ylim([0.5 3])
+%ylim([0.5 3])
 ylabel('CoV for Force (%)','FontSize',14)
 set(gca,'xtick',1:6, 'xticklabel',{'High gain','Low gain','High gain','Low gain'})
 set(gca,'TickDir','out');
 set(gca,'box','off')
-text(1.1,2.9,'Wrist Flexors','FontSize',14,'Color',[37  65 178]/255)
-text(3.1,2.9,'Wrist Extensors','FontSize',14,'Color',[230 57 70]/255)
+%text(1.1,2.9,'Wrist Flexors','FontSize',14,'Color',[37  65 178]/255)
+%text(3.1,2.9,'Wrist Extensors','FontSize',14,'Color',[230 57 70]/255)
 %legend('Participant 1','Participant 2','Participant 3','Participant 4','Participant 5','Participant 6','Participant 7','Participant 8','Participant 9','location','southeast')
 
 %%

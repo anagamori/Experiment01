@@ -10,7 +10,7 @@ clear all
 clc
 
 %--------------------------------------------------------------------------
-dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 01 20_MVC/Wrist extension/';
+dataFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 01/Wrist flexion/';
 codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01';
 
 %--------------------------------------------------------------------------
@@ -45,12 +45,20 @@ for n = 1:length(trial_vec)
     mean_Force_1 = mean(Force_1);
     SD_Force_1 = std(Force_1);
     CoV_1(i) = SD_Force_1/mean_Force_1*100;
-    [pxx_1_temp,freq] = pwelch(Force_1-mean(Force_1),gausswin(5*Fs),0.9*5*Fs,0:0.2:30,Fs,'power');
+    [pxx_1_temp,freq] = pwelch(Force_1-mean(Force_1),[],[],0:0.1:20,Fs);
     PT_1(i) = mean(mean(pxx_1_temp(:,31:51),2));
+    
     time = [1:length(Force_Norm_1)]./Fs;
-    figure(11)
-    plot(time,Force_Norm_1)
-    hold on 
+%     figure(11)
+%     plot(time,Force_Norm_1)
+%     hold on 
+    
+    lag_length = 3*Fs;
+    [c_1,lags] = xcorr(Force_1-mean(Force_1),lag_length,'coeff');
+   
+%     figure(21)
+%     stem(lags(lag_length+1:end),c_1(lag_length+1:end))
+%     hold on 
     
     load (fileName2)
     Force_RawVoltage_2 = data.values(8:13,:)'-data.offset';
@@ -61,27 +69,17 @@ for n = 1:length(trial_vec)
     mean_Force_2 = mean(Force_2);
     SD_Force_2 = std(Force_2);
     CoV_2(i) = SD_Force_2/mean_Force_2*100;
-    [pxx_2_temp,~] = pwelch(Force_2-mean(Force_2),gausswin(5*Fs),0.9*5*Fs,0:0.2:30,Fs,'power');
+    [pxx_2_temp,~] = pwelch(Force_2-mean(Force_2),[],[],0:0.1:20,Fs);
     PT_2(i) = mean(mean(pxx_2_temp(:,31:51),2));
-    figure(12)
-    plot(time,Force_Norm_2)
-    hold on 
+%     figure(12)
+%     plot(time,Force_Norm_2)
+%     hold on 
     
-%     load (fileName3)
-%     Force_RawVoltage_3 = data.values(8:13,:)'-data.offset';
-%     Force_Newton_3 = Force_RawVoltage_3*CalibrationMatrix;
-%     Force_Norm_3 = abs(Force_Newton_3(:,3))./MVC*100;
-%     Force_Norm_3 = filtfilt(b,a,Force_Norm_3);
-%     Force_3 = Force_Norm_3(10*Fs+1:end);
-%     mean_Force_3 = mean(Force_3);
-%     SD_Force_3 = std(Force_3);
-%     CoV_3(i) = SD_Force_3/mean_Force_3*100;
-%     [pxx_3_temp,~] = pwelch(Force_3-mean(Force_3),gausswin(5*Fs),0.9*5*Fs,0:0.2:30,Fs,'power');
-%     PT_3(i) = mean(mean(pxx_3_temp(:,31:51),2));  
-%     cd (codeFolder)
-%     figure(13)
-%     plot(time,Force_Norm_3)
-%     hold on    
+     [c_2,lags] = xcorr(Force_2-mean(Force_2),lag_length,'coeff');
+   
+%     figure(22)
+%     stem(lags(lag_length+1:end),c_2(lag_length+1:end))
+%     hold on 
     
     cd (codeFolder)
     pxx_1(i,:) = pxx_1_temp;
@@ -106,28 +104,19 @@ for f = 1:length(freq)
         p_1_2_norm(f) = 0.2;
     end
     
-%     [~,p_1_3(f)] = ttest2(pxx_1(:,f),pxx_3(:,f));
-%     if p_1_3(f) > 0.2
-%         p_1_3(f) = 0.2;
-%     end
-%     
-%     [~,p_2_3(f)] = ttest2(pxx_2(:,f),pxx_3(:,f));
-%     if p_2_3(f) > 0.2
-%         p_2_3(f) = 0.2;
-%     end
 end
 
 CoV_All = [CoV_1',CoV_2']; %,CoV_3'];
 PT_All = [PT_1',PT_2']; %,PT_3'];
 
-cd (dataFolder)
-save('CoV_All','CoV_All')
-save('PT_All','PT_All')
-save('pxx_1','pxx_1')
-save('pxx_2','pxx_2')
-save('pxx_norm_1','pxx_norm_1')
-save('pxx_norm_2','pxx_norm_2')
-cd (codeFolder)
+% cd (dataFolder)
+% save('CoV_All','CoV_All')
+% save('PT_All','PT_All')
+% save('pxx_1','pxx_1')
+% save('pxx_2','pxx_2')
+% save('pxx_norm_1','pxx_norm_1')
+% save('pxx_norm_2','pxx_norm_2')
+% cd (codeFolder)
 
 figure(1)
 boxplot(CoV_All)
@@ -145,8 +134,11 @@ hold on
 plot(freq,mean(pxx_2),'LineWidth',2)
 % hold on 
 % plot(freq,mean(pxx_3),'LineWidth',2)
+set(gca,'TickDir','out');
+set(gca,'box','off')
 xlabel('Frequency (Hz)','FontSize',14)
 ylabel('Power (N^2)','FontSize',14)
+ylim([0 1e-4])
 legend('High gain continuous','Low gain continuous')
 
 figure(4)
