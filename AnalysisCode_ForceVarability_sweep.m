@@ -15,11 +15,11 @@ for n = 1:11
     n
     %--------------------------------------------------------------------------
     if n < 10
-        dataFolder = ['/Users/akira/Documents/GitHub/Experiment01/Record ID 0' num2str(n) '/Wrist ' muscle];
+        dataFolder = ['C:\Users\anaga\OneDrive\Documents\GitHub\Experiment01\Record ID 0' num2str(n) '/Wrist ' muscle];
     else
-        dataFolder = ['/Users/akira/Documents/GitHub/Experiment01/Record ID ' num2str(n) '/Wrist ' muscle];
+        dataFolder = ['C:\Users\anaga\OneDrive\Documents\GitHub\Experiment01\Record ID ' num2str(n) '/Wrist ' muscle];
     end
-    codeFolder = '/Users/akira/Documents/GitHub/Experiment01';
+    codeFolder = 'C:\Users\anaga\OneDrive\Documents\GitHub\Experiment01\';
     
     %--------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ for n = 1:11
         SD_Force_1 = std(Force_1);
         CoV_1(i) = SD_Force_1/mean_Force_1*100;
         CoV_1_dt(i) = std(Force_1_dt)/mean_Force_1*100;
-        [pxx_1_temp,freq] = pwelch(Force_1-mean(Force_1),hann(2.5*Fs),0.9*2.5*Fs,0:0.1:30,Fs);
+        [pxx_1_temp,freq] = pwelch(Force_1-mean(Force_1),hann(5*Fs),0.9*5*Fs,0:0.1:30,Fs);
         %pxx_1_temp = pxx_1_temp./sum(pxx_1_temp);
         PT_1(i) = mean(mean(pxx_1_temp(:,31:61),2));
         p_12_20_1(i) = mean(mean(pxx_1_temp(:,61:101),2));
@@ -81,7 +81,7 @@ for n = 1:11
         SD_Force_2 = std(Force_2);
         CoV_2(i) = SD_Force_2/mean_Force_2*100;
         CoV_2_dt(i) = std(Force_2_dt)/mean_Force_2*100;
-        [pxx_2_temp,~] = pwelch(Force_2-mean(Force_2),hann(2.5*Fs),0.9*2.5*Fs,0:0.1:30,Fs);
+        [pxx_2_temp,~] = pwelch(Force_2-mean(Force_2),hann(5*Fs),0.9*5*Fs,0:0.1:30,Fs);
         %pxx_2_temp = pxx_2_temp./sum(pxx_2_temp);
         PT_2(i) = mean(mean(pxx_2_temp(:,31:61),2));
         p_12_20_2(i) = mean(mean(pxx_2_temp(:,61:101),2));

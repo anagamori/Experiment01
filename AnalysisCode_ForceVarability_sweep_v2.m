@@ -19,11 +19,11 @@ for k = 1:2
         n
         %--------------------------------------------------------------------------
         if n < 10
-            dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID 0' num2str(n) '/Wrist ' muscle];
+            dataFolder = ['C:\Users\anaga\OneDrive\Documents\GitHub\Experiment01\Record ID 0' num2str(n) '/Wrist ' muscle];
         else
-            dataFolder = ['/Users/akiranagamori/Documents/GitHub/Experiment01/Record ID ' num2str(n) '/Wrist ' muscle];
+            dataFolder = ['C:\Users\anaga\OneDrive\Documents\GitHub\Experiment01\Record ID ' num2str(n) '/Wrist ' muscle];
         end
-        codeFolder = '/Users/akiranagamori/Documents/GitHub/Experiment01';
+        codeFolder = 'C:\Users\anaga\OneDrive\Documents\GitHub\Experiment01';
         
         %--------------------------------------------------------------------------
         Fs = 1000;
